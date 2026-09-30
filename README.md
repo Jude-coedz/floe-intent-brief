@@ -1,5 +1,7 @@
 # Floe Intent Brief
 
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FJude-coedz%2Ffloe-intent-brief&project-name=floe-intent-brief&repository-name=floe-intent-brief)
+
 A speculative product extension for Floe, built around one question:
 
 > Floe already captures what a buyer wanted, saw and asked. What should the AE see next?
