@@ -1,142 +1,83 @@
-export type EvidenceSource = "Discovery answer" | "Buyer question" | "Demo navigation" | "Follow-up action";
+export type IntentKey = "forecast" | "billing" | "overages";
 
-export type Signal = {
-  id: string;
+export type IntentOption = {
+  key: IntentKey;
   label: string;
-  summary: string;
-  confidence: "Direct" | "Strong";
-  evidence: {
-    source: EvidenceSource;
-    timestamp: string;
-    quote: string;
-    context: string;
-  }[];
+  description: string;
+  floeReply: string;
+  screenTitle: string;
+  screenDescription: string;
+  primaryMetric: string;
+  primaryValue: string;
+  secondaryMetric: string;
+  secondaryValue: string;
+  detailTitle: string;
+  detailRows: Array<{ label: string; value: string }>;
+  learned: string;
 };
 
-export const buyer = {
-  name: "Maya Chen",
-  role: "VP, Demand Generation",
-  company: "Ledgerline",
-  companySize: "220 employees",
-  sessionLength: "12m 41s",
-  source: "Pricing page",
-};
-
-export const nextMove = {
-  title: "Run a technical validation call, not another product demo.",
-  reason:
-    "Maya has already seen the workflow. The open questions are CRM writeback, security posture, and procurement fit.",
-  owner: "AE + Solutions Engineer",
-  people: "Invite RevOps and Finance",
-};
-
-export const signals: Signal[] = [
+export const intentOptions: IntentOption[] = [
   {
-    id: "demo-gate",
-    label: "Primary job",
-    summary: "Replace the demo gate without adding more SE coverage.",
-    confidence: "Direct",
-    evidence: [
-      {
-        source: "Discovery answer",
-        timestamp: "01:12",
-        quote: "We have enough inbound. The problem is the wait between interest and someone actually seeing the product.",
-        context: "Stated problem during discovery",
-      },
-      {
-        source: "Buyer question",
-        timestamp: "03:06",
-        quote: "Could this handle the after-hours traffic without someone from our team joining?",
-        context: "Confirms the coverage problem",
-      },
+    key: "forecast",
+    label: "Forecast monthly spend",
+    description: "I need to know what usage will cost before the invoice lands.",
+    floeReply: "Got it. Let’s skip invoice setup for now and look at how Meterly projects spend from live usage.",
+    screenTitle: "Spend forecast",
+    screenDescription: "Projected month-end cost based on current usage velocity.",
+    primaryMetric: "Projected spend",
+    primaryValue: "$6,460",
+    secondaryMetric: "vs. last month",
+    secondaryValue: "+8.4%",
+    detailTitle: "Forecast drivers",
+    detailRows: [
+      { label: "API calls", value: "$3,820" },
+      { label: "Seats", value: "$1,920" },
+      { label: "Storage", value: "$720" },
     ],
+    learned: "Predictability before the invoice matters more than billing setup.",
   },
   {
-    id: "hubspot",
-    label: "Integration dependency",
-    summary: "HubSpot writeback is part of the buying decision, not a nice-to-have.",
-    confidence: "Direct",
-    evidence: [
-      {
-        source: "Buyer question",
-        timestamp: "05:42",
-        quote: "Does the qualification data actually write back to HubSpot, or does someone still copy it over?",
-        context: "Explicit integration requirement",
-      },
-      {
-        source: "Demo navigation",
-        timestamp: "06:03",
-        quote: "Floe opened Integrations → HubSpot and showed the recap fields passed into CRM.",
-        context: "Feature inspected during the demo",
-      },
+    key: "billing",
+    label: "Bill customers accurately",
+    description: "I need confidence that usage turns into the right customer charge.",
+    floeReply: "Makes sense. I’ll take you straight to the rating and invoice preview instead of spend forecasting.",
+    screenTitle: "Invoice preview",
+    screenDescription: "Usage events translated into billable line items before invoices are issued.",
+    primaryMetric: "Draft invoice",
+    primaryValue: "$12,840",
+    secondaryMetric: "Unrated events",
+    secondaryValue: "0",
+    detailTitle: "Line items",
+    detailRows: [
+      { label: "API usage", value: "$8,200" },
+      { label: "Platform seats", value: "$3,840" },
+      { label: "Storage overage", value: "$800" },
     ],
+    learned: "Rating accuracy and invoice confidence are the real buying questions.",
   },
   {
-    id: "security",
-    label: "Open blocker",
-    summary: "Security and data handling still need a human answer before procurement moves.",
-    confidence: "Strong",
-    evidence: [
-      {
-        source: "Buyer question",
-        timestamp: "09:18",
-        quote: "Where is conversation data stored, and can we control how long you keep it?",
-        context: "Security question not fully resolved in-session",
-      },
-      {
-        source: "Follow-up action",
-        timestamp: "11:54",
-        quote: "Maya asked to include their RevOps lead and finance partner in the next conversation.",
-        context: "Signals cross-functional evaluation",
-      },
+    key: "overages",
+    label: "Control overages",
+    description: "I need to catch abnormal usage before costs get out of hand.",
+    floeReply: "Understood. Let’s ignore invoicing for a moment and look at usage limits and alerts.",
+    screenTitle: "Usage controls",
+    screenDescription: "Thresholds that surface unusual usage before it becomes a surprise charge.",
+    primaryMetric: "Accounts near limit",
+    primaryValue: "4",
+    secondaryMetric: "Alerts today",
+    secondaryValue: "7",
+    detailTitle: "Highest risk accounts",
+    detailRows: [
+      { label: "Northstar Labs", value: "92% of limit" },
+      { label: "Orbit Systems", value: "87% of limit" },
+      { label: "Acme Cloud", value: "81% of limit" },
     ],
+    learned: "The buyer is evaluating operational control, not billing mechanics.",
   },
 ];
 
-export const evaluationPath = [
-  {
-    time: "01:12",
-    title: "Discovery",
-    detail: "Explains scheduling delay and SE coverage problem.",
-    type: "Declared intent",
-  },
-  {
-    time: "04:10",
-    title: "Usage pricing",
-    detail: "Checks whether the model works for a 40-seat revenue team.",
-    type: "Commercial fit",
-  },
-  {
-    time: "05:42",
-    title: "HubSpot",
-    detail: "Asks whether qualification and recap data write back automatically.",
-    type: "Technical dependency",
-  },
-  {
-    time: "09:18",
-    title: "Security",
-    detail: "Asks about data residency and retention controls.",
-    type: "Open blocker",
-  },
-  {
-    time: "11:54",
-    title: "Next step",
-    detail: "Requests a follow-up with RevOps and Finance included.",
-    type: "Buying motion",
-  },
-];
-
-export const callPrep = [
-  {
-    label: "Answer first",
-    value: "Show exact HubSpot fields + writeback behaviour",
-  },
-  {
-    label: "Bring",
-    value: "Security posture + retention controls",
-  },
-  {
-    label: "Avoid",
-    value: "Repeating the core product walkthrough",
-  },
+export const baseUsageRows = [
+  { meter: "API calls", volume: "1.2M", rate: "$0.003 / call", projected: "$3,600" },
+  { meter: "Seats", volume: "40", rate: "$48 / seat", projected: "$1,920" },
+  { meter: "Storage", volume: "940 GB", rate: "$1 / GB", projected: "$940" },
 ];
