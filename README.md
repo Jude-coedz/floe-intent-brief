@@ -1,33 +1,44 @@
-# Floe Intent Brief
+# Floe Intent Loop
 
-A speculative product extension for Floe, built around one question:
+A speculative product concept built around the idea shared with Amit Solanki:
 
-> Floe already captures what a buyer wanted, saw and asked. What should the AE see next?
+> Make Floe's instant-demo experience even more useful for qualifying what a buyer actually cares about while they are exploring.
 
-The concept turns one demo session into a compact, evidence-backed handoff designed for the next sales action rather than transcript review.
+## The interaction
 
-## Product idea
+The prototype demonstrates one small addition to the live demo loop:
 
-The prototype demonstrates:
+1. A buyer asks Floe to show a product capability.
+2. Floe shows the relevant part of the product.
+3. At the moment of interest, Floe asks one contextual question: **what are you actually trying to validate?**
+4. The buyer chooses the outcome that matters to them.
+5. Floe immediately changes the next part of the demo around that answer.
 
-1. **Next move first** — the AE immediately sees the conversation worth having next.
-2. **Evidence-backed intent** — every buyer signal can be opened to inspect the exact discovery answer, question, or demo action behind it.
-3. **Evaluation path** — the sequence of what the buyer chose to inspect stays visible instead of becoming a flat feature list.
-4. **Call preparation** — the handoff ends with what to answer, who to bring, and what not to repeat.
+The point is not to add another qualification form. The buyer gets a more relevant demo, and Floe gets a cleaner signal as a side effect.
 
-This is intentionally a presentation-layer concept. Floe already captures rich session intelligence, qualification signals, recaps, questions, objections and recommended next steps. The prototype explores a more decision-oriented surface for the AE consuming those signals.
+## Example
 
-## Design principles
+The representative product is a fictional usage-billing SaaS called Meterly.
 
-- evidence before inference
-- one primary action at a time
-- normal reading sizes, no micro-text
-- sparse accent colour
-- rows and sections over card grids
-- uncertainty and representative data labelled explicitly
-- no unexplained scores
-- short opacity/position motion only
-- no decorative gradients, glow, or generic AI dashboard styling
+A buyer asks: "Can you show me how usage billing works?"
+
+Floe then asks whether the buyer is trying to:
+- forecast monthly spend,
+- bill customers accurately, or
+- control overages.
+
+Each answer produces a different next screen and demo route.
+
+## Product principles used
+
+The build borrows the **process discipline** from the work on Understudy, not its product language or interface:
+- start from one clear user job,
+- one obvious action at a time,
+- remove screens that do not advance the story,
+- use normal reading sizes,
+- keep motion restrained,
+- make the prototype explain itself through interaction,
+- avoid generic AI-dashboard decoration.
 
 ## Stack
 
@@ -48,4 +59,4 @@ Open `http://127.0.0.1:43129`.
 
 ## Notes
 
-The buyer, company, quotes, timestamps and session are representative data created for this concept. No Floe customer data is used.
+The Meterly product, figures and demo paths are illustrative. This does not use private Floe or customer data.
